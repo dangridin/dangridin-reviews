@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reviews — Dan Gridin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D080;
+    --dark-bg: #111010;
+    --dark-card: #181716;
+    --dark-border: #2a2825;
+    --dark-text: #E8E2D9;
+    --dark-muted: #7a746c;
+    --light-bg: #F5F2ED;
+    --light-card: #FFFFFF;
+    --light-border: #E0DAD0;
+    --light-text: #1A1714;
+    --light-muted: #8a847c;
+  }
+
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+    background: transparent;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    padding: 0;
+  }
+
+  /* ─── CAROUSEL WRAPPER ─── */
+  .carousel-wrap {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .track {
+    display: flex;
+    transition: transform 0.55s cubic-bezier(0.77, 0, 0.175, 1);
+    will-change: transform;
+  }
+
+  .slide {
+    min-width: 100%;
+    padding: 16px 20px 8px;
+  }
+
+  /* ─── CARD ─── */
+  .card {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* DARK CARD */
+  .card-dark {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+  }
+
+  .card-dark .accent-line {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--gold) 0%, transparent 100%);
+    border-radius: 16px 0 0 16px;
+  }
+
+  .card-dark .quote-glyph {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 120px;
+    line-height: 1;
+    color: var(--gold);
+    opacity: 0.08;
+    position: absolute;
+    top: 8px;
+    left: 20px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* LIGHT CARD */
+  .card-light {
+    background: var(--light-card);
+    border: 1px solid var(--light-border);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+
+  .card-light .accent-line {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--gold) 0%, transparent 100%);
+    border-radius: 16px 0 0 16px;
+  }
+
+  .card-light .quote-glyph {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 120px;
+    line-height: 1;
+    color: var(--gold);
+    opacity: 0.06;
+    position: absolute;
+    top: 8px;
+    left: 20px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ─── CARD BODY ─── */
+  .card-body {
+    padding: 32px 28px 24px 36px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .review-text {
+    font-size: 15px;
+    line-height: 1.75;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+
+  .card-dark .review-text { color: var(--dark-text); }
+  .card-light .review-text { color: var(--light-text); }
+
+  .highlight {
+    font-weight: 600;
+    position: relative;
+  }
+
+  .card-dark .highlight { color: var(--gold-light); }
+  .card-light .highlight { color: #8a6a00; }
+
+  /* ─── AUTHOR ─── */
+  .author-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 28px 18px 36px;
+  }
+
+  .card-dark .author-row {
+    border-top: 1px solid var(--dark-border);
+  }
+  .card-light .author-row {
+    border-top: 1px solid var(--light-border);
+  }
+
+  .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    flex-shrink: 0;
+    border: 2px solid transparent;
+  }
+
+  .card-dark .avatar { border-color: var(--dark-border); }
+  .card-light .avatar { border-color: var(--light-border); }
+
+  /* Placeholder avatar */
+  .avatar-placeholder {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .card-dark .avatar-placeholder {
+    background: #2a2825;
+    color: var(--gold);
+    border: 2px solid var(--dark-border);
+  }
+
+  .card-light .avatar-placeholder {
+    background: #F0EAE0;
+    color: #8a6a00;
+    border: 2px solid var(--light-border);
+  }
+
+  .author-info { flex: 1; }
+
+  .author-name {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .card-dark .author-name { color: var(--dark-text); }
+  .card-light .author-name { color: var(--light-text); }
+
+  .author-role {
+    font-size: 12px;
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  .card-dark .author-role { color: var(--dark-muted); }
+  .card-light .author-role { color: var(--light-muted); }
+
+  /* ─── FOOTER ─── */
+  .card-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 28px 16px 36px;
+  }
+
+  .card-dark .card-footer { border-top: 1px solid var(--dark-border); }
+  .card-light .card-footer { border-top: 1px solid var(--light-border); }
+
+  .cta-link {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .card-dark .cta-link { color: var(--dark-muted); }
+  .card-light .cta-link { color: var(--light-muted); }
+
+  /* ─── CONTROLS ─── */
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 16px 0 8px;
+  }
+
+  .ctrl-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .ctrl-btn:hover { background: #f0f0f0; transform: scale(1.08); }
+  .ctrl-btn:active { transform: scale(0.94); }
+
+  .dots {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ccc;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .dot.active {
+    background: #888;
+    transform: scale(1.4);
+  }
+
+  .slide-counter {
+    font-size: 11px;
+    color: #aaa;
+    font-family: 'DM Sans', sans-serif;
+    min-width: 36px;
+    text-align: center;
+  }
+
+  /* ─── TOUCH HINT ─── */
+  .touch-hint {
+    text-align: center;
+    font-size: 10px;
+    color: #bbb;
+    padding-bottom: 4px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<div class="carousel-wrap" id="carousel">
+  <div class="track" id="track">
+
+    <!-- ══ СЛАЙД 1: Нутурдинов — тёмная ══ -->
+    <div class="slide">
+      <div class="card card-dark">
+        <div class="accent-line"></div>
+        <div class="quote-glyph">"</div>
+        <div class="card-body">
+          <p class="review-text">
+            Спасибо Дэну за курс — хорошо структурированный, понятный, а
+            <span class="highlight">Q&A решают все проблемы и недопонимания,
+            которые могут остаться при прохождении.</span>
+            Было интересно обновить свой тех стек, увидеть и сравнить подходы
+            использования AI коллег с бо́льшим опытом.
+          </p>
+        </div>
+        <div class="author-row">
+          <!--
+            ЗАМЕНА ФОТО: замени <div class="avatar-placeholder">AN</div>
+            на <img class="avatar" src="URL_ФОТО" alt="Alex Nurtdinov">
+          -->
+          <div class="avatar-placeholder">AN</div>
+          <div class="author-info">
+            <div class="author-name">Alex Nurtdinov</div>
+            <div class="author-role">Senior BDR · Square Finance</div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a class="cta-link" href="https://dangridin.com/bdr" target="_blank">dangridin.com/bdr</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ СЛАЙД 2: Нутурдинов — светлая ══ -->
+    <div class="slide">
+      <div class="card card-light">
+        <div class="accent-line"></div>
+        <div class="quote-glyph">"</div>
+        <div class="card-body">
+          <p class="review-text">
+            Спасибо Дэну за курс — хорошо структурированный, понятный, а
+            <span class="highlight">Q&A решают все проблемы и недопонимания,
+            которые могут остаться при прохождении.</span>
+            Было интересно обновить свой тех стек, увидеть и сравнить подходы
+            использования AI коллег с бо́льшим опытом.
+          </p>
+        </div>
+        <div class="author-row">
+          <div class="avatar-placeholder">AN</div>
+          <div class="author-info">
+            <div class="author-name">Alex Nurtdinov</div>
+            <div class="author-role">Senior BDR · Square Finance</div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a class="cta-link" href="https://dangridin.com/bdr" target="_blank">dangridin.com/bdr</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ СЛАЙД 3: Акимов — тёмная ══ -->
+    <div class="slide">
+      <div class="card card-dark">
+        <div class="accent-line"></div>
+        <div class="quote-glyph">"</div>
+        <div class="card-body">
+          <p class="review-text">
+            Я и моя команда пришли к Даниилу на обучение с одной глобальной
+            целью: актуализировать инструментарий и обновить свою базу знаний
+            по ABM. Лично я проходил обучение у Даниила уже во второй раз.
+            <span class="highlight">Мы мощно оптимизировали все свои
+            outreach-процессы.</span>
+          </p>
+        </div>
+        <div class="author-row">
+          <!--
+            ЗАМЕНА ФОТО: замени <div class="avatar-placeholder">ДА</div>
+            на <img class="avatar" src="URL_ФОТО" alt="Дмитрий Акимов">
+          -->
+          <div class="avatar-placeholder">ДА</div>
+          <div class="author-info">
+            <div class="author-name">Дмитрий Акимов</div>
+            <div class="author-role">Head of Sales</div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a class="cta-link" href="https://dangridin.com/bdr" target="_blank">dangridin.com/bdr</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ СЛАЙД 4: Акимов — светлая ══ -->
+    <div class="slide">
+      <div class="card card-light">
+        <div class="accent-line"></div>
+        <div class="quote-glyph">"</div>
+        <div class="card-body">
+          <p class="review-text">
+            Я и моя команда пришли к Даниилу на обучение с одной глобальной
+            целью: актуализировать инструментарий и обновить свою базу знаний
+            по ABM. Лично я проходил обучение у Даниила уже во второй раз.
+            <span class="highlight">Мы мощно оптимизировали все свои
+            outreach-процессы.</span>
+          </p>
+        </div>
+        <div class="author-row">
+          <div class="avatar-placeholder">ДА</div>
+          <div class="author-info">
+            <div class="author-name">Дмитрий Акимов</div>
+            <div class="author-role">Head of Sales</div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a class="cta-link" href="https://dangridin.com/bdr" target="_blank">dangridin.com/bdr</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /track -->
+</div><!-- /carousel-wrap -->
+
+<div class="controls">
+  <button class="ctrl-btn" id="prev" aria-label="Назад">&#8592;</button>
+  <div class="dots" id="dots"></div>
+  <button class="ctrl-btn" id="next" aria-label="Вперёд">&#8594;</button>
+</div>
+<div class="touch-hint">свайп или стрелки ← →</div>
+
+<script>
+  const track = document.getElementById('track');
+  const slides = track.querySelectorAll('.slide');
+  const dotsWrap = document.getElementById('dots');
+  const total = slides.length;
+  let current = 0;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(d);
+  });
+
+  function goTo(n) {
+    current = (n + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dotsWrap.querySelectorAll('.dot').forEach((d, i) =>
+      d.classList.toggle('active', i === current));
+  }
+
+  document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('next').addEventListener('click', () => goTo(current + 1));
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+    if (e.key === 'ArrowRight') goTo(current + 1);
+  });
+
+  // Touch / swipe
+  let startX = 0;
+  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+  });
+
+  // Notify Notion iframe of height
+  function notifyHeight() {
+    const h = document.body.scrollHeight;
+    window.parent.postMessage({ type: 'resize', height: h }, '*');
+  }
+  window.addEventListener('load', notifyHeight);
+  new ResizeObserver(notifyHeight).observe(document.body);
+</script>
+
+</body>
+</html>
