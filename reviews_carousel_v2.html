@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #ffffff;
+    padding: 40px 0;
+  }
+
+  .carousel-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .carousel-title {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+
+  .carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+    align-items: stretch;
+  }
+
+  .carousel-slide {
+    flex: 0 0 calc(33.333% - 14px);
+    min-width: 0;
+    display: flex;
+  }
+
+  @media (max-width: 900px) {
+    .carousel-slide { flex: 0 0 calc(50% - 10px); }
+  }
+  @media (max-width: 600px) {
+    .carousel-slide { flex: 0 0 100%; }
+  }
+
+  /* Карточка */
+  .card {
+    background: #ffffff;
+    border: 0.5px solid #e0e0e0;
+    border-radius: 0;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    width: 100%;
+  }
+
+  .card::before { content:''; position:absolute; top:-1px; left:-1px; width:14px; height:14px; border-top:2px solid #8a5f00; border-left:2px solid #8a5f00; }
+  .card::after  { content:''; position:absolute; top:-1px; right:-1px; width:14px; height:14px; border-top:2px solid #8a5f00; border-right:2px solid #8a5f00; }
+  .corner-bl { position:absolute; bottom:-1px; left:-1px; width:14px; height:14px; border-bottom:2px solid #8a5f00; border-left:2px solid #8a5f00; }
+  .corner-br { position:absolute; bottom:-1px; right:-1px; width:14px; height:14px; border-bottom:2px solid #8a5f00; border-right:2px solid #8a5f00; }
+
+  .card-headline {
+    color: #0d0d0d;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .card-text {
+    color: #2a2a2a;
+    font-size: 14px;
+    line-height: 1.65;
+    font-weight: 400;
+    flex: 1;
+  }
+
+  .hl { color: #8a5f00; font-weight: 500; }
+  .nw { white-space: nowrap; }
+
+  .card-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 4px;
+  }
+
+  .card-photo {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    background: #f0f0f0;
+  }
+
+  .card-author-info { display: flex; flex-direction: column; min-width: 0; }
+  .card-author-name { color: #0d0d0d; font-size: 13px; font-weight: 500; }
+  .card-author-role { color: #888; font-size: 12px; margin-top: 2px; line-height: 1.4; }
+
+  .card-footer {
+    font-size: 11px;
+    color: #bbb;
+    text-align: right;
+  }
+
+  /* Навигация */
+  .carousel-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 28px;
+  }
+
+  .nav-btn {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #e0e0e0;
+    border-radius: 0;
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    color: #444;
+    flex-shrink: 0;
+  }
+  .nav-btn:hover:not(:disabled) { border-color: #8a5f00; color: #8a5f00; }
+  .nav-btn:disabled { opacity: 0.25; cursor: default; }
+
+  .nav-dots { display: flex; gap: 6px; align-items: center; }
+
+  .nav-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: all 0.25s;
+    border: none; padding: 0;
+  }
+  .nav-dot.active { background: #8a5f00; width: 20px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="carousel-section">
+  <p class="carousel-title">Отзывы студентов</p>
+  <div class="carousel-wrapper">
+    <div class="carousel-track" id="track">
+
+      <!-- 1. СИМАКОВ -->
+      <div class="carousel-slide"><div class="card">
+        <div class="corner-bl"></div><div class="corner-br"></div>
+        <p class="card-headline">Партнёрский трек даёт конверсию примерно <span class="nw">6–7 встреч</span> из&nbsp;10 реквестов в&nbsp;LinkedIn</p>
+        <p class="card-text">Самое большое откровение для меня&nbsp;— <span class="hl">это то, как скорить компании, и&nbsp;как вообще подбирать гипотезы.</span> Вместо одной мега-гипотезы я&nbsp;её декомпозировал, а&nbsp;сегментов рынка оказалось&nbsp;5, вместо изначальных&nbsp;2.<br><br>Дальше только <span class="nw">практика-практика-практика</span>, но&nbsp;конверсия уже сейчас&nbsp;— примерно <span class="nw">6–7 встреч</span> из&nbsp;10 реквестов в&nbsp;LinkedIn.</p>
+        <div class="card-author">
+          <img class="card-photo" src="photos/simakov.jpg" alt="Никита Симаков">
+          <div class="card-author-info">
+            <span class="card-author-name">Никита Симаков</span>
+            <span class="card-author-role">BDR @Fintech</span>
+          </div>
+        </div>
+        <div class="card-footer">dangridin.com/bdr</div>
+      </div></div>
+
+      <!-- 2. ВЕКШИНА -->
+      <div class="carousel-slide"><div class="card">
+        <div class="corner-bl"></div><div class="corner-br"></div>
+        <p class="card-text">Я&nbsp;начала читать финансовые отчёты компаний, смотреть тренды по&nbsp;марже, замечать названия внутренних проектов и&nbsp;использовать это в&nbsp;теме письма — так, чтобы письмо выглядело как внутренняя переписка.<br><br><span class="hl">Только за&nbsp;счёт этого я&nbsp;смогла вырастить open rate с&nbsp;10% до&nbsp;70%.</span><br><br>Если раньше я&nbsp;вручную качала годовые отчёты, то&nbsp;сейчас ресёрч по&nbsp;ста компаниям&nbsp;— за&nbsp;пару минут. Настоящая магия.</p>
+        <div class="card-author">
+          <img class="card-photo" src="photos/vekshina.jpg" alt="Мария Векшина">
+          <div class="card-author-info">
+            <span class="card-author-name">Мария Векшина</span>
+            <span class="card-author-role">Dem Gen Lead, ADC Consulting</span>
+          </div>
+        </div>
+        <div class="card-footer">dangridin.com/bdr</div>
+      </div></div>
+
+      <!-- 3. АКИМОВ -->
+      <div class="carousel-slide"><div class="card">
+        <div class="corner-bl"></div><div class="corner-br"></div>
+        <p class="card-headline">Производительность биздев команды возросла в&nbsp;<span class="nw">10 раз</span></p>
+        <p class="card-text">Если раньше мы&nbsp;делали <span class="nw">20–30</span> качественных enterprise аутричей в&nbsp;месяц, то&nbsp;сейчас&nbsp;— <span class="nw">200–300</span>. Это просто <span class="hl nw">x10 к&nbsp;нашей производительности.</span><br><br>Аутричи стали более персонализированными, ресёрчи&nbsp;— заточены под ICP. Те&nbsp;цели, которые мы&nbsp;ставили, мы&nbsp;закрыли.</p>
+        <div class="card-author">
+          <img class="card-photo" src="photos/akimov.jpg" alt="Даниил Акимов">
+          <div class="card-author-info">
+            <span class="card-author-name">Даниил Акимов</span>
+            <span class="card-author-role">Head of Sales дивизиона Creative, Kokoc Group</span>
+          </div>
+        </div>
+        <div class="card-footer">dangridin.com/bdr</div>
+      </div></div>
+
+      <!-- 4. ЛУЗГАЧЁВ -->
+      <div class="carousel-slide"><div class="card">
+        <div class="corner-bl"></div><div class="corner-br"></div>
+        <p class="card-headline">ROI от&nbsp;курса&nbsp;— бесконечность</p>
+        <p class="card-text">Ощущение, что рядом со&nbsp;мной появился целый отдел маркетинга.<br><br><span class="hl">Фреймворк незаменимый для предпринимателя</span>&nbsp;— позволяет на&nbsp;скейле тестировать кучу гипотез, искать лиды, не&nbsp;отвлекаясь на&nbsp;технические вопросы, работая только с&nbsp;сутевыми задачами.</p>
+        <div class="card-author">
+          <img class="card-photo" src="photos/luzgachev.jpg" alt="Михаил Лузгачёв">
+          <div class="card-author-info">
+            <span class="card-author-name">Михаил Лузгачёв</span>
+            <span class="card-author-role">Founder/CEO, ArtemisLed, Системы уличного освещения</span>
+          </div>
+        </div>
+        <div class="card-footer">dangridin.com/bdr</div>
+      </div></div>
+
+      <!-- 5. ГОЛОЩАПОВА -->
+      <div class="carousel-slide"><div class="card">
+        <div class="corner-bl"></div><div class="corner-br"></div>
+        <p class="card-text"><span class="hl">Обучение окупилось с&nbsp;лихвой, подарив несколько клиентов в&nbsp;Enterprise сегменте, куда не&nbsp;могли достучаться раньше.</span> Удалось выстроить инфраструктуру для аутрича, не&nbsp;потратив миллионы денег.<br><br>Очень рекомендую курс и&nbsp;SDRам и&nbsp;руководителям бизнеса. Становится всё прозрачно, понимаешь, чем можешь управлять, а&nbsp;чем нет.</p>
+        <div class="card-author">
+          <img class="card-photo" src="photos/goloshapova.jpg" alt="Екатерина Голощапова">
+          <div class="card-author-info">
+            <span class="card-author-name">Екатерина Голощапова</span>
+            <span class="card-author-role">Head of Emerging Markets @Voximplant</span>
+          </div>
+        </div>
+        <div class="card-footer">dangridin.com/bdr</div>
+      </div></div>
+
+      <!-- 6. РОДИОНОВА -->
+      <div class="carousel-slide"><div class="card">
+        <div class="corner-bl"></div><div class="corner-br"></div>
+        <p class="card-text">Курс стал для меня мощным апгрейдом в&nbsp;плане <span class="nw">AI-инструментов</span> для поиска контактов с&nbsp;суперспецифичными интересами и&nbsp;опытом.<br><br><span class="hl">Комьюнити выпускников&nbsp;— отдельная сила.</span> В&nbsp;чате помогали разбираться с&nbsp;вопросами, от&nbsp;GDPR до&nbsp;идей по&nbsp;составлению промптов под конкретные кейсы.</p>
+        <div class="card-author">
+          <img class="card-photo" src="photos/rodionova.jpg" alt="Alisa Rodionova">
+          <div class="card-author-info">
+            <span class="card-author-name">Alisa Rodionova</span>
+            <span class="card-author-role">Co-Founder, sportupper.com</span>
+          </div>
+        </div>
+        <div class="card-footer">dangridin.com/bdr</div>
+      </div></div>
+
+      <!-- 7. ЖАДИК -->
+      <div class="carousel-slide"><div class="card">
+        <div class="corner-bl"></div><div class="corner-br"></div>
+        <p class="card-text">Курс помог закрыть «гигиеническую базу» по&nbsp;аутричу&nbsp;— что можно делать, что нельзя и&nbsp;почему.<br><br><span class="hl">Аутрич перед конференциями, который раньше загружал на&nbsp;неделю фултайм <span class="nw">2–3</span> человека, сократился по&nbsp;времени как минимум в&nbsp;3&nbsp;раза.</span><br><br>Отдельное спасибо за&nbsp;адаптацию контента под запрос&nbsp;— покрыли больше тем, чем ожидалось, с&nbsp;погружением в&nbsp;ABM.</p>
+        <div class="card-author">
+          <img class="card-photo" src="photos/zhadik.jpg" alt="Елизавета Жадик">
+          <div class="card-author-info">
+            <span class="card-author-name">Елизавета Жадик</span>
+            <span class="card-author-role">BDR @KEWAZO, производство роботизированных лифтов</span>
+          </div>
+        </div>
+        <div class="card-footer">dangridin.com/bdr</div>
+      </div></div>
+
+      <!-- 8. ТАШ -->
+      <div class="carousel-slide"><div class="card">
+        <div class="corner-bl"></div><div class="corner-br"></div>
+        <p class="card-text">Изначально цель была посмотреть, как работает Clay в&nbsp;продажах. А&nbsp;по&nbsp;факту открыл для себя магию комплекта разных инструментов и&nbsp;<span class="hl">скилл-схему делать супер эффективный холодный аутрич, не&nbsp;теряя на&nbsp;это много времени.</span><br><br>Ставлю <span class="nw">10 из 10</span> за&nbsp;отдачу, инсайты и&nbsp;мотивацию.</p>
+        <div class="card-author">
+          <img class="card-photo" src="photos/tash.jpg" alt="Aziz Tash">
+          <div class="card-author-info">
+            <span class="card-author-name">Aziz Tash</span>
+            <span class="card-author-role">BDM @ Yango (Dubai)</span>
+          </div>
+        </div>
+        <div class="card-footer">dangridin.com/bdr</div>
+      </div></div>
+
+      <!-- 9. ГАЙНУЛЛИН -->
+      <div class="carousel-slide"><div class="card">
+        <div class="corner-bl"></div><div class="corner-br"></div>
+        <p class="card-text">Теория записана бодро, но&nbsp;<span class="hl">QA-сессии&nbsp;— моё почтение.</span> Даниил разбирает с&nbsp;ходу любые практические вопросы. Мне напилил агента для поиска контекста заходов в&nbsp;банки по&nbsp;ИБ через разных ЛПР.<br><br>Полученные знания помогли по-другому взглянуть на&nbsp;свой проект и&nbsp;выполнить KPI.</p>
+        <div class="card-author">
+          <img class="card-photo" src="photos/gainullin.jpg" alt="Рустам Гайнуллин">
+          <div class="card-author-info">
+            <span class="card-author-name">Рустам Гайнуллин</span>
+            <span class="card-author-role">Founder @Коммьюнити Алаверды</span>
+          </div>
+        </div>
+        <div class="card-footer">dangridin.com/bdr</div>
+      </div></div>
+
+      <!-- 10. СМИРНОВ -->
+      <div class="carousel-slide"><div class="card">
+        <div class="corner-bl"></div><div class="corner-br"></div>
+        <p class="card-text"><span class="hl">Курс разложил всё в&nbsp;хорошую и&nbsp;связанную структуру.</span><br><br>Стало понятно, как делать персонализацию на&nbsp;потоке с&nbsp;использованием Clay и&nbsp;других тулов. Много полезного по&nbsp;инфраструктуре аутрича&nbsp;— помогло масштабировать систему и&nbsp;исправить несколько критичных ошибок.</p>
+        <div class="card-author">
+          <img class="card-photo" src="photos/smirnov.jpg" alt="Алексей Смирнов">
+          <div class="card-author-info">
+            <span class="card-author-name">Алексей Смирнов</span>
+            <span class="card-author-role">Regional Director, SPH Engineering, Промышленные дроны</span>
+          </div>
+        </div>
+        <div class="card-footer">dangridin.com/bdr</div>
+      </div></div>
+
+      <!-- 11. РЫБАКОВА-КРЕМЛЁВА -->
+      <div class="carousel-slide"><div class="card">
+        <div class="corner-bl"></div><div class="corner-br"></div>
+        <p class="card-text">Курс помог нашей команде полностью перестроить холодный <span class="nw">лид-ген</span> и&nbsp;сделать проработку каждого захода ювелирно персонализированной.<br><br><span class="hl">AI-часть курса продвинула нас на&nbsp;новый качественный уровень</span>&nbsp;— то, что раньше занимало часы, теперь делается за&nbsp;минуты. Уже использовали на&nbsp;двух кампаниях, получили лидов и&nbsp;встречи.</p>
+        <div class="card-author">
+          <img class="card-photo" src="photos/rybakova.jpg" alt="Мария Рыбакова-Кремлёва">
+          <div class="card-author-info">
+            <span class="card-author-name">Мария Рыбакова-Кремлёва</span>
+            <span class="card-author-role">CMO @ Eastwind</span>
+          </div>
+        </div>
+        <div class="card-footer">dangridin.com/bdr</div>
+      </div></div>
+
+    </div>
+  </div>
+
+  <div class="carousel-nav">
+    <button class="nav-btn" id="prevBtn" onclick="move(-1)" aria-label="Назад">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 11L5 7L9 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="nav-dots" id="dots"></div>
+    <button class="nav-btn" id="nextBtn" onclick="move(1)" aria-label="Вперёд">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3L9 7L5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const slides = track.querySelectorAll('.carousel-slide');
+  const dotsEl = document.getElementById('dots');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  let cur = 0;
+
+  function vis() {
+    const w = window.innerWidth;
+    return w <= 600 ? 1 : w <= 900 ? 2 : 3;
+  }
+
+  function pages() { return Math.ceil(slides.length / vis()); }
+
+  function render() {
+    const v = vis();
+    const w = slides[0].getBoundingClientRect().width;
+    track.style.transform = `translateX(-${cur * v * (w + 20)}px)`;
+    dotsEl.innerHTML = '';
+    for (let i = 0; i < pages(); i++) {
+      const d = document.createElement('button');
+      d.className = 'nav-dot' + (i === cur ? ' active' : '');
+      d.onclick = () => { cur = i; render(); };
+      dotsEl.appendChild(d);
+    }
+    prevBtn.disabled = cur === 0;
+    nextBtn.disabled = cur >= pages() - 1;
+  }
+
+  function move(d) { cur = Math.max(0, Math.min(cur + d, pages() - 1)); render(); }
+
+  // Swipe
+  let sx = 0;
+  track.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const dx = sx - e.changedTouches[0].clientX;
+    if (Math.abs(dx) > 40) move(dx > 0 ? 1 : -1);
+  }, { passive: true });
+
+  window.addEventListener('resize', () => { cur = 0; render(); });
+  render();
+</script>
+</body>
+</html>
