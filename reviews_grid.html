@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Onest', sans-serif; background: #fff; padding: 48px 24px; }
+  .section-title { font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 32px; text-align: center; }
+  .masonry { columns: 2; column-gap: 16px; max-width: 960px; margin: 0 auto; }
+  @media (max-width: 640px) { .masonry { columns: 1; } }
+  .card { break-inside: avoid; background: #fff; border: 0.5px solid #e8e8e8; border-radius: 12px; padding: 24px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 14px; }
+  .card-text { color: #2a2a2a; font-size: 14px; line-height: 1.7; }
+  .hl { color: #8a5f00; font-weight: 500; }
+  .nw { white-space: nowrap; }
+  .author-row { display: flex; align-items: center; gap: 10px; padding-top: 12px; border-top: 1px solid #f0f0f0; }
+  .author-photo { width: 40px; height: 40px; min-width: 40px; border-radius: 50%; object-fit: cover; object-position: center top; background: #f5f5f5; }
+  .author-name { font-size: 13px; font-weight: 500; color: #0d0d0d; }
+  .author-role { font-size: 12px; color: #999; margin-top: 2px; line-height: 1.4; }
+  .show-more-wrap { text-align: center; margin-top: 8px; max-width: 960px; margin-left: auto; margin-right: auto; }
+  .show-more-btn { padding: 10px 28px; border: 1px solid #d0d0d0; border-radius: 8px; background: #fff; color: #444; font-size: 13px; font-family: 'Onest', sans-serif; cursor: pointer; transition: all 0.2s; }
+  .show-more-btn:hover { border-color: #8a5f00; color: #8a5f00; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<p class="section-title">Что говорят студенты</p>
+<div class="masonry" id="masonry">
+
+  <!-- 1. СИМАКОВ -->
+  <div class="card">
+    <p class="card-text">Самое большое откровение для меня&nbsp;— <span class="hl">это то, как скорить компании, и&nbsp;как вообще подбирать гипотезы.</span> Вместо одной мега-гипотезы я&nbsp;её декомпозировал, а&nbsp;сегментов рынка оказалось&nbsp;5, вместо изначальных&nbsp;2.<br><br>Дальше только практика-практика-практика, но&nbsp;у&nbsp;меня уже сейчас партнёрский трек даёт конверсию примерно <span class="nw">6–7 встреч</span> из&nbsp;10 реквестов в&nbsp;LinkedIn.</p>
+    <div class="author-row">
+      <img class="author-photo" src="photos/simakov.jpg" alt="Никита Симаков">
+      <div><div class="author-name">Никита Симаков</div><div class="author-role">BDR @Fintech</div></div>
+    </div>
+  </div>
+
+  <!-- 2. ВЕКШИНА -->
+  <div class="card">
+    <p class="card-text">Я&nbsp;начала читать финансовые отчёты компаний, смотреть тренды по&nbsp;марже и&nbsp;выручке, замечать названия внутренних проектов и&nbsp;использовать это в&nbsp;теме письма&nbsp;— так, чтобы письмо выглядело как внутренняя переписка.<br><br><span class="hl">Только за&nbsp;счёт этого я&nbsp;смогла вырастить open rate с&nbsp;10% до&nbsp;70%.</span><br><br>Если раньше я&nbsp;вручную качала годовые отчёты, то&nbsp;сейчас ресёрч по&nbsp;ста компаниям&nbsp;— за&nbsp;пару минут. Настоящая магия.</p>
+    <div class="author-row">
+      <img class="author-photo" src="photos/vekshina.jpg" alt="Мария Векшина">
+      <div><div class="author-name">Мария Векшина</div><div class="author-role">Dem Gen Lead, ADC Consulting</div></div>
+    </div>
+  </div>
+
+  <!-- 3. АКИМОВ -->
+  <div class="card">
+    <p class="card-text">Если раньше мы&nbsp;делали <span class="nw">20–30</span> качественных enterprise аутричей в&nbsp;месяц, то&nbsp;сейчас&nbsp;— <span class="nw">200–300</span>. <span class="hl">Это просто x10 к&nbsp;нашей производительности.</span><br><br>Аутричи стали более персонализированными, ресёрчи&nbsp;— заточены под ICP. Те&nbsp;цели, которые мы&nbsp;ставили, мы&nbsp;закрыли.</p>
+    <div class="author-row">
+      <img class="author-photo" src="photos/akimov.jpg" alt="Даниил Акимов">
+      <div><div class="author-name">Даниил Акимов</div><div class="author-role">Head of Sales, Kokoc Group</div></div>
+    </div>
+  </div>
+
+  <!-- 4. ЛУЗГАЧЁВ -->
+  <div class="card">
+    <p class="card-text">Ощущение, что рядом со&nbsp;мной появился целый отдел маркетинга.<br><br><span class="hl">Фреймворк незаменимый для предпринимателя</span>&nbsp;— позволяет на&nbsp;скейле тестировать кучу гипотез, искать лиды, не&nbsp;отвлекаясь на&nbsp;технические вопросы, работая только с&nbsp;сутевыми задачами.<br><br>ROI от&nbsp;курса&nbsp;— бесконечность.</p>
+    <div class="author-row">
+      <img class="author-photo" src="photos/luzgachev.jpg" alt="Михаил Лузгачёв">
+      <div><div class="author-name">Михаил Лузгачёв</div><div class="author-role">Founder/CEO, ArtemisLed</div></div>
+    </div>
+  </div>
+
+  <!-- 5. ГОЛОЩАПОВА -->
+  <div class="card">
+    <p class="card-text"><span class="hl">Обучение окупилось с&nbsp;лихвой, подарив несколько клиентов в&nbsp;Enterprise сегменте, куда не&nbsp;могли достучаться раньше.</span> Удалось выстроить инфраструктуру для аутрича, не&nbsp;потратив миллионы денег.<br><br>Очень рекомендую курс и&nbsp;SDRам и&nbsp;руководителям бизнеса. Становится всё прозрачно, понимаешь, чем можешь управлять, а&nbsp;чем нет.</p>
+    <div class="author-row">
+      <img class="author-photo" src="photos/goloshapova.jpg" alt="Екатерина Голощапова">
+      <div><div class="author-name">Екатерина Голощапова</div><div class="author-role">Head of Emerging Markets @Voximplant</div></div>
+    </div>
+  </div>
+
+  <!-- 6. РОДИОНОВА -->
+  <div class="card">
+    <p class="card-text">Курс Дэна стал для меня мощным апгрейдом в&nbsp;плане AI-инструментов для поиска контактов с&nbsp;суперспецифичными интересами и&nbsp;опытом, а&nbsp;также написания для них классных персонализированных писем.<br><br><span class="hl">Комьюнити выпускников&nbsp;— отдельная сила.</span> В&nbsp;чате мне помогали разбираться с&nbsp;разными вопросами, от&nbsp;GDPR до&nbsp;идей по&nbsp;составлению промптов под мои конкретные кейсы.</p>
+    <div class="author-row">
+      <img class="author-photo" src="photos/rodionova.jpg" alt="Alisa Rodionova">
+      <div><div class="author-name">Alisa Rodionova</div><div class="author-role">Co-Founder, sportupper.com</div></div>
+    </div>
+  </div>
+
+  <!-- 7–11 скрытые -->
+
+  <!-- 7. ЖАДИК -->
+  <div class="card hidden extra">
+    <p class="card-text">Курс помог закрыть «гигиеническую базу» по&nbsp;аутричу&nbsp;— что можно делать, что нельзя и&nbsp;почему.<br><br><span class="hl">Аутрич перед конференциями, который раньше загружал на&nbsp;неделю фултайм <span class="nw">2–3</span>&nbsp;человека и&nbsp;включал много ручной работы, сократился по&nbsp;времени как минимум в&nbsp;3&nbsp;раза.</span><br><br>Отдельное спасибо за&nbsp;адаптацию контента под запрос&nbsp;— покрыли больше тем, чем ожидалось, с&nbsp;погружением в&nbsp;ABM. Спасибо!</p>
+    <div class="author-row">
+      <img class="author-photo" src="photos/zhadik.jpg" alt="Елизавета Жадик">
+      <div><div class="author-name">Елизавета Жадик</div><div class="author-role">BDR @KEWAZO (производство роботизированных лифтов)</div></div>
+    </div>
+  </div>
+
+  <!-- 8. ТАШ -->
+  <div class="card hidden extra">
+    <p class="card-text">Даниил, спасибо вам большое за&nbsp;курс! Получил огромное удовольствие не&nbsp;только от&nbsp;прохождения, но&nbsp;и&nbsp;от&nbsp;подачи материалов.<br><br>Изначально моя цель была посмотреть как работает CLAY в&nbsp;продажах. А, по&nbsp;факту, я&nbsp;открыл для себя магию комплекта разных инструментов и&nbsp;<span class="hl">скилл-схему делать супер эффективный холодный аутрич, не&nbsp;теряя на&nbsp;это много времени.</span><br><br>В&nbsp;общем, ставлю вам <span class="nw">10 из 10</span> за&nbsp;отдачу, инсайты и&nbsp;мотивацию!</p>
+    <div class="author-row">
+      <img class="author-photo" src="photos/tash.jpg" alt="Aziz Tash">
+      <div><div class="author-name">Aziz Tash</div><div class="author-role">BDM @ Yango (Dubai)</div></div>
+    </div>
+  </div>
+
+  <!-- 9. ГАЙНУЛЛИН -->
+  <div class="card hidden extra">
+    <p class="card-text">У&nbsp;меня была конкретная задача&nbsp;— делал проект по&nbsp;лидгену в&nbsp;информационной безопасности и&nbsp;хотел посмотреть как сейчас работает AI аутрич.<br><br>Теория записана бодро, но&nbsp;<span class="hl">QA сессии&nbsp;— моё почтение.</span> На&nbsp;них Даниил разбирает с&nbsp;ходу любые практические вопросы. Мне он&nbsp;напилил агента для поиска контекста заходов в&nbsp;банки по&nbsp;ИБ, через разных ЛПР.<br><br>Полученные знания помогли по-другому взглянуть на&nbsp;свой проект и&nbsp;выполнить KPI.</p>
+    <div class="author-row">
+      <img class="author-photo" src="photos/gainullin.jpg" alt="Рустам Гайнуллин">
+      <div><div class="author-name">Рустам Гайнуллин</div><div class="author-role">Founder @Коммьюнити Алаверды</div></div>
+    </div>
+  </div>
+
+  <!-- 10. СМИРНОВ -->
+  <div class="card hidden extra">
+    <p class="card-text"><span class="hl">У&nbsp;меня уже был достаточно неплохой бэкграунд по&nbsp;ресёрчу и&nbsp;AI-тулам, но&nbsp;курс разложил всё в&nbsp;хорошую и&nbsp;связанную структуру.</span><br><br>После курса стало понятно, как делать персонализацию на&nbsp;потоке с&nbsp;использованием Clay. Много полезного по&nbsp;инфраструктуре аутрича&nbsp;— помогло масштабировать систему и&nbsp;исправить несколько критичных ошибок.</p>
+    <div class="author-row">
+      <img class="author-photo" src="photos/smirnov.jpg" alt="Алексей Смирнов">
+      <div><div class="author-name">Алексей Смирнов</div><div class="author-role">Regional Director, SPH Engineering</div></div>
+    </div>
+  </div>
+
+  <!-- 11. РЫБАКОВА -->
+  <div class="card hidden extra">
+    <p class="card-text">Курс помог нашей команде полностью перестроить холодный лид-ген и&nbsp;сделать проработку каждого захода ювелирно персонализированной.<br><br><span class="hl">AI-часть курса продвинула нас на&nbsp;новый качественный уровень</span>&nbsp;— то, что раньше занимало часы, теперь делается за&nbsp;минуты. Уже использовали на&nbsp;двух кампаниях, получили лидов и&nbsp;встречи.</p>
+    <div class="author-row">
+      <img class="author-photo" src="photos/rybakova.jpg" alt="Мария Рыбакова-Кремлёва">
+      <div><div class="author-name">Мария Рыбакова-Кремлёва</div><div class="author-role">CMO @ Eastwind</div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="show-more-wrap">
+  <button class="show-more-btn" id="btn" onclick="document.querySelectorAll('.extra').forEach(e=>e.classList.remove('hidden'));document.getElementById('btn').style.display='none'">Показать ещё 5 отзывов →</button>
+</div>
+</body>
+</html>
